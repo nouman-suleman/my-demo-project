@@ -1,0 +1,74 @@
+<h1>Listing Products</h1>
+<% if @products.nil? %>
+<div>
+<div>
+<h3>Others Products</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th></th>
+  </tr>
+
+  <% @others_products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.category %></td>
+      <td><%= product.price %></td>
+      <td><%= link_to 'Show', product_path(product) %></td>
+
+    </tr>
+  <% end %>
+</table>
+</div>
+
+  <div>
+    <h3>My Products</h3>
+    <table title="My Products">
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+
+      <% @my_products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.category %></td>
+          <td><%= product.price %></td>
+          <td><%= link_to 'Show', product_path(product) %></td>
+          <td><%= link_to 'Edit', edit_product_path(product) %></td>
+          <td><%= link_to 'Destroy', product_path(product), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        </tr>
+      <% end %>
+
+    </table>
+
+    <%= link_to 'Add new Product', new_product_path %>
+  </div>
+</div>
+<% else %>
+<div>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th></th>
+  </tr>
+
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.category %></td>
+      <td><%= product.price %></td>
+      <td><%= link_to 'Show', product_path(product) %></td>
+    </tr>
+  <% end %>
+</table><br>
+<%= link_to 'Add new Product', new_product_path %>
+</div>
+<% end %>

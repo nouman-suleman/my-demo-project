@@ -1,0 +1,25 @@
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @product.category %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<h2>Comments</h2>
+<%= render @product.comments %>
+
+<%= link_to 'Add Comment', '#', id: "add-comment-link" %>
+<section id="add-comment-section">
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>
+</section>
+<%= link_to 'Edit', edit_product_path(@product) %>
+<%= link_to 'Back', products_path %>
