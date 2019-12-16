@@ -1,38 +1,50 @@
-<%= form_with model: @product, local: true do |form| %>
+<div class="container-fluid">
 
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@product.errors.count, "error") %> prohibited
-        this product from being saved:
-      </h2>
-      <ul>
-        <% @product.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+<div class="row">
+
+  <div class="col-md-4">
+    <%= form_with model: @product,:role => "form" ,  local: true do |form| %>
+
+    <% if @product.errors.any? %>
+      <div id="error_explanation">
+        <h2>
+          <%= pluralize(@product.errors.count, "error") %> prohibited
+          this product from being saved:
+        </h2>
+        <ul>
+          <% @product.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+     <label for="product_name" class="loginFormElement">Product Name</label>
+     <%= form.text_field :name, :class=> "form-control" %>
     </div>
-  <% end %>
 
-  <p>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </p>
+    <div class="form-group">
+     <label for="product_price" class="loginFormElement">Product Price</label>
+     <%= form.text_field :price, :class=> "form-control" %>
+    </div>
 
-  <p>
-    <%= form.label :category %><br>
-    <%= form.text_field :category %>
-  </p>
+    <div class="form-group">
+     <label for="product_description" class="loginFormElement">Product Description</label>
+     <%= form.text_area :description, :class=> "form-control" %>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Product Images</label>
+      <%=form.file_field :images, :class => "form-control",  multiple: true%>
+    </div>
 
-  <p>
-    <%= form.label :price %><br>
-    <%= form.text_field :price %>
-    <%= form.hidden_field :user_id, :value => current_user.id %>
-  </p>
 
-  <p>
-    <%= form.submit %>
-  </p>
-
+    <p>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+    </p>
+    <p>
+      <button type="submit" id="commit" class="btn btn-success loginFormElement">Add Product</button>
+    </p>
+  </div>
 
 <% end %>

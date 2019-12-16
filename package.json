@@ -1,5 +1,7 @@
 {
   "name": "my-demo-project",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "tether": "^2.0.0-beta.5"
+  }
 }

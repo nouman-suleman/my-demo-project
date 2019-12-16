@@ -2,16 +2,13 @@ class ProductsController < ApplicationController
 before_action :authenticate_user!, except: [:show, :index]
 
   def index
-    if current_user.nil?
       @products = Product.all
-    else
-      @others_products = Product.where.not(user_id: current_user.id)
-      @my_products = current_user.products
-    end
   end
 
   def show
     @product = Product.find(params[:id])
+    @comment = Comment.new
+    @comments = @product.comments.order(" created_at DESC")
   end
 
   def new
@@ -53,6 +50,6 @@ before_action :authenticate_user!, except: [:show, :index]
 
   private
     def product_params
-      params.require(:product).permit(:name, :category, :price, :user_id)
+      params.require(:product).permit(:name, :description, :price, :user_id, images: [])
     end
 end

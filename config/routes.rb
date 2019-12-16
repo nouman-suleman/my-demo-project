@@ -5,12 +5,15 @@ Rails.application.routes.draw do
   resources :products
 
   resources :products do
-    resources :comments
+    resources :comments, only: [:create, :edit, :destroy]
+    resources :line_items, only: [:create, :destroy]
   end
 
   resources :users do
-    resource :cart, controller: 'cart'
+    resource :cart, controller: 'cart', only: [:create, :show, :destroy]
   end
+
+  resources :orders, only: [:create, :show, :destroy]
 
   root 'products#index'
 

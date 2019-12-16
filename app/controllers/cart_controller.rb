@@ -1,36 +1,15 @@
 class CartController < ApplicationController
+  before_action :authenticate_user!
 
   def show
-  end
-
-  def new
-    @cart = Cart.new
-  end
-
-  def edit
-    @cart = Cart.find(params[:id])
-  end
-
-  def create
-
-  end
-
-
-  def update
-
+    @cart = @current_cart
   end
 
   def destroy
-
+    @cart = @current_cart
+    @cart.line_items.destroy.all
+    redirect_to root_path
   end
 
-  private
 
-    def find_cart
-      @cart = Cart.find(params[:id])
-    end
-
-    def cart_params
-      params.require(:cart).permit(:user_id)
-    end
 end

@@ -1,14 +1,7 @@
 class CommentsController < ApplicationController
   before_action :find_comment, except: [:index, :new, :create]
   before_action :authenticate_user!, except: [:show, :index]
-
-
-  def index
-    @comments = Comment.all
-  end
-
-  def show
-  end
+  before_action :set_product
 
   def new
     @comment = Comment.new
@@ -16,19 +9,18 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = Comment.find(params[:id])
+    @product = @comment.product
   end
 
   def create
-    @product = Product.find(params[:product_id])
-    @comment = @product.comments.create!(comment_params)
-    redirect_to product_path(@product)
+    @comment = @product.comments.create(comment_params)
   end
 
 
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to @comment.product, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -38,10 +30,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:product_id])
     @comment = @product.comments.find(params[:id])
     @comment.destroy
-    redirect_to product_path(@product)
 
   end
 
@@ -54,4 +44,9 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:user_id, :product_id, :body)
     end
+
+    def set_product
+      @product = Product.find(params[:product_id])
+    end
+
 end

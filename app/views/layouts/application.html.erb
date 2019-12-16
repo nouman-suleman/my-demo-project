@@ -1,7 +1,211 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MyDemoProject</title>
+    <title>My Demo Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="/app/assets/javascripts/PlusMinus.js"></script>
+    <style>
+        a {
+            text-decoration: none;
+            color: gray;
+        }
+
+            a:hover{
+                text-decoration: none;
+            }
+        input[type="text"]::placeholder{
+            text-align:left;
+        }
+        /*quantity*/
+        .number {
+            padding-left:20px;
+        }
+
+        .minus, .plus {
+            width: 20px;
+            height: 30px;
+            background: #f2f2f2;
+            border-radius: 4px;
+            padding: 5px 5px 8px 5px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        input {
+            height: 30px;
+            width: 100px;
+            text-align: center;
+            font-size: 26px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        /*for slider*/
+        .product-slider {
+            padding: 45px;
+        }
+
+            .product-slider #carousel {
+                border: 4px solid #1089c0;
+                margin: 0;
+            }
+
+            .product-slider #thumbcarousel {
+                margin: 12px 0 0;
+                padding: 0 45px;
+            }
+
+                .product-slider #thumbcarousel .item {
+                    text-align: center;
+                }
+
+                    .product-slider #thumbcarousel .item .thumb {
+                        border: 2px solid #cecece;
+                        width: 20%;
+                        margin: 0 1%;
+                        display: inline-block;
+                        vertical-align: middle;
+                        cursor: pointer;
+                        max-width: 98px;
+                    }
+
+                        .product-slider #thumbcarousel .item .thumb:hover {
+                            border-color: #1089c0;
+                        }
+
+            .product-slider .item img {
+                width: 100%;
+                height: auto;
+            }
+
+        .carousel-control {
+            color: #0284b8;
+            text-align: center;
+            text-shadow: none;
+            font-size: 30px;
+            width: 30px;
+            height: 30px;
+            line-height: 20px;
+            top: 23%;
+        }
+
+            .carousel-control:hover, .carousel-control:focus, .carousel-control:active {
+                color: #333;
+            }
+
+
+
+        .carousel-control {
+            background-color: rgba(0, 0, 0, 0);
+            bottom: auto;
+            font-size: 20px;
+            left: 0;
+            position: absolute;
+            top: 30%;
+            width: auto;
+        }
+
+            .carousel-control.right, .carousel-control.left {
+                background-color: rgba(0, 0, 0, 0);
+                background-image: none;
+            }
+
+        .row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn2 {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn2:hover {
+  background-color: #45a049;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+
+
+
+    </style>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,33 +214,8 @@
   </head>
 
   <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">Products</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-        </ul>
-        <span class="navbar-text">
-
-          <% if user_signed_in? %>
-            <%= link_to "Logout", destroy_user_session_path, method: :delete  %>
-          <% else %>
-            <%= link_to "Login", new_user_session_path %>
-          <% end %>
-        </span>
-      </div>
-    </nav>
-
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-
+      <%= render 'layouts/navbar' %>
+      <%= render 'layouts/alerts' %>
     <%= yield %>
   </body>
 </html>

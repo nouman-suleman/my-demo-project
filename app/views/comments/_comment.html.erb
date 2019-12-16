@@ -1,14 +1,27 @@
+<div id="comment-<%= comment.id %>" >
+<div class="row">
+  <div style="padding-left:20px; padding-right:20px;">
+    <div class="col-lg-12">
+      <span href="#" style="float:left; font-size:30px; color:black; display:block;">
+       <%= comment.body %>
+      </span>
+      <br />
+      <span href="#" style="float:left; font-size:20px; color:gray; display:block;">
+      By <%= comment.user.name %> at <%= comment.created_at.strftime("%I:%M %p") %>
+      </span><br /><br />
+    </div>
+    <div class="container">
+    <% if current_user && current_user == comment.user %>
+        <%= link_to "Edit", edit_product_comment_path(@product, comment), :class => "btn btn-primary btn-sm",
+        :style => "padding-left:20px; padding-right:20px; margin: 2px;", remote: :true %>
+        <%= link_to "Delete", product_comment_path(@product, comment),  :class => "btn btn-danger btn-sm",
+        :style => "padding-left:20px; padding-right:20px; margin: 2px;", method: :delete, remote: :true %>
+    <% end %>
+    </div>
+  </div>
+</div>
+  <hr>
+<br />
+</div>
 
-<p>
-  <strong>Comment:</strong>
-  <%= comment.body %>
-</p>
-<p>
-  <% if comment.user_id == current_user.id %>
-    <%= link_to 'Edit Comment', edit_comment_path(comment) %>
-    <%= link_to 'Delete Comment', [comment.product, comment],
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %>
-  <% end %>
 
-</p>

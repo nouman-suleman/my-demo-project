@@ -1,0 +1,105 @@
+<div style=" padding:70px 50px 0px 50px;">
+        <div class="row" style="color:gray; font-size:15px; font-family:'Times New Roman';">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-8">
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 hidden-xs">
+                <span class="hover glyphicon glyphicon-trash" style="padding-top:3px;">
+                    DELETE
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                <span style="float:left; padding-top:3px;">
+                    PRICE
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+                <span style="float:left; padding-top:3px;">
+                    QUANTITY
+                </span>
+            </div>
+        </div>
+
+        <hr />
+
+        <% @current_cart.line_items.each do |item| %>
+            <div class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                    <span style="float:left; padding-top:50px;">
+                    </span>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                    <span style="float:left;">
+                        <% if item.product.images.attached? %>
+                          <%= image_tag(item.product.images.first, class: "col-lg-12", style: "height:150px") %>
+                        <% else %>
+                          <%= image_tag 'product.png', class: "col-lg-12", style: "height:150px" %>
+                      <% end %>
+                    </span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4 hidden-xs">
+                    <span style="float:left; font-size:20px;">
+                        <%= item.product.description %>
+                    </span>
+                    <span style="float:left; font-size:12px; padding-top:12px;">
+                        <%= item.name %>
+                    </span>
+                    <%= link_to product_line_item_path(item.product, item), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <span style="float:left; font-size:20px; padding-top:20px; color:lightgray;" class="glyphicon glyphicon-trash">
+                    </span>
+                    <% end %>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                    <span style="font-weight:700; font-size:25px; display:block; color:orange;"><%= item.unit_price %></span>
+                    <br />
+                </div>
+                <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+                    <span class="number" style="float:left;">
+
+                        <%= text_field 'item','quantity' , :value => item.quantity %>
+
+                    </span>
+                </div>
+            </div>
+        <% end %>
+
+        <hr />
+
+        <!-- Total -->
+
+        <div class="row">
+            <div class="col-lg-1 col-md-1 hidden-sm hidden-xs">
+
+            </div>
+            <div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 hidden-xs">
+                <span style="float:left;">
+                    <span style="font-weight:700; font-size:25px; display:block; color:black;">TOTAL</span>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                <span style="font-weight:700; font-size:25px; display:block; color:orange;"><%= @current_cart.sub_total %></span>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                <span style="float:left;">
+                    <%= button_to 'Proceed to Checkout', orders_path, class: "btn btn-lg", style:"height:50px; width:200px; border:1px solid white; background-color:orangered;  color:white;" %>
+                </span>
+            </div>
+        </div>
+        <hr />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+    </div>
